@@ -25,8 +25,8 @@ public class DoctorService {
                 .orElse(null);
     }
 
-    public void deleteDoctor(Long id){
-        doctors.removeIf(d -> d.getId().equals(id));
+    public boolean deleteDoctor(Long id){
+        return doctors.removeIf(d -> d.getId().equals(id));
     }
 
     public Doctor updateDoctor(Long id, Doctor updatedDoctor){
