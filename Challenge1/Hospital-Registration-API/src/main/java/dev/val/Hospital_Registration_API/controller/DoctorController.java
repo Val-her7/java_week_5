@@ -1,5 +1,7 @@
 package dev.val.Hospital_Registration_API.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,23 +27,34 @@ public class DoctorController {
     }
 
     @GetMapping
-    public List<Doctor> allDoctors(){
-        return doctorService.getAllDoctors();
+    public ResponseEntity<List<Doctor>> allDoctors(){
+        return ResponseEntity.ok(doctorService.getAllDoctors());
     }
 
     @GetMapping("/{id}")
-    public Doctor doctorById(@PathVariable Long id){
-        return doctorService.getDoctorById(id);
+    public ResponseEntity<Object> doctorById(@PathVariable Long id){
+        Doctor doctor = doctorService.getDoctorById(id);
+
+        if(doctor == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor not found!");
+        }
+        return ResponseEntity.ok(doctor);
     }
 
     @PostMapping
-    public void addDoctor(@RequestBody Doctor newDoctor){
+    public ResponseEntity<String> addDoctor(@RequestBody Doctor newDoctor){
         doctorService.addDoctor(newDoctor);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Doctor created successfully!");
     }
 
     @PutMapping("/{id}")
-    public void updateDoctor(@PathVariable Long id, @RequestBody Doctor updateDoctor){
-        doctorService.updateDoctor(id, updateDoctor);
+    public ResponseEntity<Object> updateDoctor(@PathVariable Long id, @RequestBody Doctor updateDoctor){
+        Doctor updated = doctorService.updateDoctor(id, updateDoctor);
+
+        if(updated == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor not found!");
+        }
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")

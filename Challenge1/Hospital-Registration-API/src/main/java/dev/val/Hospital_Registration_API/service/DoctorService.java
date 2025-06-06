@@ -29,11 +29,13 @@ public class DoctorService {
         doctors.removeIf(d -> d.getId().equals(id));
     }
 
-    public void updateDoctor(Long id, Doctor updatedDoctor){
+    public Doctor updateDoctor(Long id, Doctor updatedDoctor){
         for(int i = 0; i < doctors.size(); i++){
             if(doctors.get(i).getId().equals(id)){
                 doctors.set(i, updatedDoctor);
+                return updatedDoctor;
             }
         }
+        return null;
     }
 }
