@@ -1,5 +1,7 @@
 package dev.val.Hospital_Registration_API.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,23 +27,24 @@ public class VisitController {
     }
 
     @GetMapping
-    public List<Visit> allVisits() {
-        return visitService.getAllVisits();
+    public ResponseEntity<List<Visit>> allVisits() {
+        return ResponseEntity.ok(visitService.getAllVisits());
     }
 
     @GetMapping(params = "date")
-    public List<Visit> allVisitsByDate(@RequestParam(value = "date") LocalDate date) {
-        return visitService.getAllVisitsByDate(date);
+    public ResponseEntity<List<Visit>> allVisitsByDate(@RequestParam(value = "date") LocalDate date) {
+        return ResponseEntity.ok(visitService.getAllVisitsByDate(date));
     }
 
     @GetMapping(params = { "start", "end" })
-    public List<Visit> allVisitsByPeriod(@RequestParam(value = "start") LocalDate start,
+    public ResponseEntity<List<Visit>> allVisitsByPeriod(@RequestParam(value = "start") LocalDate start,
             @RequestParam(value = "end") LocalDate end) {
-        return visitService.getAllVisitsByPeriod(start, end);
+        return ResponseEntity.ok(visitService.getAllVisitsByPeriod(start, end));
     }
 
     @PostMapping
-    public void addVisit(@RequestBody Visit newVisit){
+    public ResponseEntity<String> addVisit(@RequestBody Visit newVisit){
         visitService.addVisit(newVisit);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Visit created successfully!");
     }
 }
