@@ -31,12 +31,12 @@ public class VisitController {
         return ResponseEntity.ok(visitService.getAllVisits());
     }
 
-    @GetMapping(params = "date")
+    @GetMapping("/by-date")
     public ResponseEntity<List<Visit>> allVisitsByDate(@RequestParam(value = "date") LocalDate date) {
         return ResponseEntity.ok(visitService.getAllVisitsByDate(date));
     }
 
-    @GetMapping(params = { "start", "end" })
+    @GetMapping("/by-period")
     public ResponseEntity<List<Visit>> allVisitsByPeriod(@RequestParam(value = "start") LocalDate start,
             @RequestParam(value = "end") LocalDate end) {
         return ResponseEntity.ok(visitService.getAllVisitsByPeriod(start, end));
