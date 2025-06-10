@@ -13,6 +13,8 @@ import dev.val.Hospital_Registration_API.service.VisitService;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import dev.val.Hospital_Registration_API.dto.VisitDTO;
 import dev.val.Hospital_Registration_API.model.Visit;
 
 @RestController
@@ -27,7 +29,7 @@ public class VisitController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Visit>> allVisits() {
+    public ResponseEntity<List<VisitDTO>> allVisits() {
         return ResponseEntity.ok(visitService.getAllVisits());
     }
 

@@ -1,6 +1,9 @@
 package dev.val.Hospital_Registration_API.service;
 
 import org.springframework.stereotype.Service;
+
+import dev.val.Hospital_Registration_API.dto.VisitDTO;
+import dev.val.Hospital_Registration_API.mapper.VisitDTOMapper;
 import dev.val.Hospital_Registration_API.model.Visit;
 import dev.val.Hospital_Registration_API.repository.VisitRepository;
 
@@ -12,17 +15,19 @@ import java.util.stream.Collectors;
 public class VisitService {
 
     private final VisitRepository visitRepository;
+    private final VisitDTOMapper visitDTOMapper;
 
-    public VisitService(VisitRepository visitRepository){
+    public VisitService(VisitRepository visitRepository, VisitDTOMapper visitDTOMapper) {
         this.visitRepository = visitRepository;
+        this.visitDTOMapper = visitDTOMapper;
     }
 
     public void addVisit(Visit newVisit) {
         visitRepository.save(newVisit);
     }
 
-    public List<Visit> getAllVisits() {
-        return visitRepository.findAll();
+    public List<VisitDTO> getAllVisits() {
+        return visitRepository.findAll().stream().map(visitDTOMapper).toList();
     }
 
     public List<Visit> getAllVisitsByDate(LocalDate date) {
