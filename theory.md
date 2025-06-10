@@ -308,3 +308,33 @@ public ResponseEntity<Doctor> getDoctorById(@PathVariable Long id) {
     return ResponseEntity.ok(doctor);
 }
 ```
+## Qu’est-ce que Lombok ?
+
+Lombok est une bibliothèque Java qui **génère automatiquement** du code répétitif comme les getters, setters, constructeurs, `toString()`, `equals()`, etc., grâce à des annotations.
+
+### Annotations courantes
+
+- `@Getter` : génère les getters
+
+- `@Setter` : génère les setters
+
+- `@Data` : getters + setters + toString + equals + hashCode
+
+- `@NoArgsConstructor` : constructeur vide (indispensable pour JPA)
+
+- `@AllArgsConstructor` : constructeur avec tous les champs
+
+- `@Builder` : design pattern builder
+  
+### Pourquoi utiliser Lombok ?
+
+- Réduit considérablement la quantité de code répétitif.
+- Améliore la lisibilité de tes classes.
+- Évite les erreurs liées à l’écriture manuelle des getters/setters.
+- Permet d’utiliser facilement des design patterns (ex : `@Builder`).
+
+### Remarques
+
+- Lombok génère le code à la compilation, donc le code généré n’est pas visible dans les fichiers sources.
+- Certains IDE nécessitent un plugin Lombok pour bien reconnaître les annotations (ex : IntelliJ, Eclipse).
+- Pour les entités JPA, il faut toujours un constructeur sans argument (`@NoArgsConstructor`) car JPA en a besoin.
