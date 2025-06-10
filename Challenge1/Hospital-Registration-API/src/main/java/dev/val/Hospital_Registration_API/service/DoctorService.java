@@ -1,40 +1,43 @@
 package dev.val.Hospital_Registration_API.service;
 
-import java.util.ArrayList;
 import dev.val.Hospital_Registration_API.model.Doctor;
-import java.util.List;
+import dev.val.Hospital_Registration_API.repository.DoctorRepository;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class DoctorService {
 
-    private List<Doctor> doctors = new ArrayList<>();
+    private final DoctorRepository doctorRepository;
+
+    public DoctorService(DoctorRepository doctorRepository){
+        this.doctorRepository = doctorRepository;
+    }
 
     public void addDoctor(Doctor newDoctor){
-        doctors.add(newDoctor);
+        doctorRepository.save(newDoctor);
     }
 
     public List<Doctor> getAllDoctors(){
-        return doctors;
+        return doctorRepository.findAll();
     }
 
     public Doctor getDoctorById(Long id){
-        return doctors.stream()
-                .filter(d -> d.getId().equals(id))
-                .findAny()
-                .orElse(null);
+        return doctorRepository.findById(id).orElse(null);
     }
 
     public boolean deleteDoctor(Long id){
-        return doctors.removeIf(d -> d.getId().equals(id));
+        if(doctorRepository.existsById(id)){
+            doctorRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     public Doctor updateDoctor(Long id, Doctor updatedDoctor){
-        for(int i = 0; i < doctors.size(); i++){
-            if(doctors.get(i).getId().equals(id)){
-                doctors.set(i, updatedDoctor);
-                return updatedDoctor;
-            }
+        if(doctorRepository.existsById(id)){
+            updatedDoctor.setId(id);
+            return doctorRepository.save(updatedDoctor);
         }
         return null;
     }
