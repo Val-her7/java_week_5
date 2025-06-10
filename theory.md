@@ -308,6 +308,8 @@ public ResponseEntity<Doctor> getDoctorById(@PathVariable Long id) {
     return ResponseEntity.ok(doctor);
 }
 ```
+---
+
 ## Qu’est-ce que Lombok ?
 
 Lombok est une bibliothèque Java qui **génère automatiquement** du code répétitif comme les getters, setters, constructeurs, `toString()`, `equals()`, etc., grâce à des annotations.
@@ -338,3 +340,54 @@ Lombok est une bibliothèque Java qui **génère automatiquement** du code rép�
 - Lombok génère le code à la compilation, donc le code généré n’est pas visible dans les fichiers sources.
 - Certains IDE nécessitent un plugin Lombok pour bien reconnaître les annotations (ex : IntelliJ, Eclipse).
 - Pour les entités JPA, il faut toujours un constructeur sans argument (`@NoArgsConstructor`) car JPA en a besoin.
+
+---
+## 🧩 Qu’est-ce que JPA ?
+
+**JPA (Java Persistence API)** est une **spécification Java** (pas une bibliothèque) permettant de mapper des objets Java à des **tables de base de données relationnelles**.
+
+Fait partie de **Jakarta EE** (ex Java EE).
+
+➡️ Elle permet de faire du **ORM (Object-Relational Mapping)** : enregistrer, lire, modifier ou supprimer des objets Java **sans écrire de SQL** directement.
+
+---
+
+### 🔧 JPA + Implémentation concrète
+
+JPA est **une interface**. Pour l’utiliser, on a besoin d’une **implémentation**.
+
+💡 La plus utilisée : **Hibernate**.
+
+> Dans 99% des cas (ex : Spring Boot), quand on dit "JPA", on utilise **JPA + Hibernate**.
+
+---
+
+### 📦 Exemple d'entité JPA
+
+```java
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "users")
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private String email;
+
+    // Constructeurs, getters, setters...
+}
+```
+### 🧪 Explication des annotations JPA
+
+| Annotation               | Rôle                                                                 |
+|--------------------------|----------------------------------------------------------------------|
+| `@Entity`               | Indique que cette classe est une entité JPA (donc une table)         |
+| `@Table(name = "users")`| Nom de la table dans la base de données (optionnel si le même nom)   |
+| `@Id`                   | Indique la clé primaire                                               |
+| `@GeneratedValue(...)`  | Génère automatiquement l’ID (auto-incrémenté)                         |
+| `@Column(...)`          | (Optionnelle) Personnalise une colonne : nom, nullabilité, longueur, etc. |
+---
