@@ -391,3 +391,50 @@ public class User {
 | `@GeneratedValue(...)`  | Génère automatiquement l’ID (auto-incrémenté)                         |
 | `@Column(...)`          | (Optionnelle) Personnalise une colonne : nom, nullabilité, longueur, etc. |
 ---
+## 🧪 Tests des contrôleurs Spring avec MockMvc
+
+### 📌 Objectif
+
+Tester les **endpoints HTTP** des contrôleurs Spring sans lancer un serveur complet, en simulant les requêtes HTTP avec `MockMvc`.
+
+---
+
+### 🔧 Outils utilisés
+
+- `@WebMvcTest` : pour tester uniquement la couche contrôleur.
+- `MockMvc` : pour simuler les requêtes HTTP.
+- `@MockBean`(déprécié) ou `@MockitoBean` : pour injecter des dépendances simulées.
+- `ObjectMapper` : pour convertir objets Java ⇄ JSON.
+
+---
+### Remarque
+Lorsque vous utilisez `MockMvc` pour simuler une requête HTTP **POST**, **PUT** ou autre avec un **corps de requête**, vous devez spécifier deux choses importantes :
+
+#### 1.🔷 `contentType(MediaType.APPLICATION_JSON)`
+
+Cela indique au serveur **le type de contenu** envoyé dans la requête. Ici :
+
+```java
+.contentType(MediaType.APPLICATION_JSON)
+```
+signifie: "Le corps de la requête est en format JSON."
+
+#### 2.🔷 `content(json)`
+Cela permet d’envoyer le corps de la requête (le "body") :
+
+```java
+.content(json)
+```
+json est généralement une chaîne générée depuis un objet Java :
+
+```java
+String json = objectMapper.writeValueAsString(monObjet);
+```
+Cela envoie donc les données de l’objet, converties en texte JSON, dans le corps de la requête.
+
+### 🧠 Résumé
+| Instruction                                | Utilité                                                  |
+|--------------------------------------------|-----------------------------------------------------------|
+| `.contentType(MediaType.APPLICATION_JSON)` | Indique que les données envoyées sont au format JSON      |
+| `.content(json)`                           | Envoie le corps de la requête                            |
+| `objectMapper.writeValueAsString(obj)`     | Convertit un objet Java en chaîne JSON (format texte)     |
