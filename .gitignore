@@ -1,0 +1,15 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Dossiers de build / compilation
+out/
+bin/
+target/
+
+# Fichiers temporaires
+*.log
+*.class
