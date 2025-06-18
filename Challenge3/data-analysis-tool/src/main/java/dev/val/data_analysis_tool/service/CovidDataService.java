@@ -21,7 +21,7 @@ public class CovidDataService {
     }
 
     public void readFile() {
-        InputStream file = getClass().getResourceAsStream("/static/covid_and_trade.csv");
+        InputStream file = getClass().getResourceAsStream("/csv/covid_and_trade.csv");
         if (file == null) {
             System.out.println("File not found.");
             return;
