@@ -48,7 +48,6 @@ public class CovidDataService {
                     ));
                 }
             }
-            System.out.println(covidDataList);
         } catch (IOException e) {
             System.out.println("Something went wrong.");
             e.printStackTrace();
